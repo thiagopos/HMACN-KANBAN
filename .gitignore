@@ -1,0 +1,5 @@
+SCRAPPER/NODE_MODULES/
+SCRAPPER/yarn.lock
+WEB/NODE_MODULES/
+WEB/yarn.lock
+yarn.lock
