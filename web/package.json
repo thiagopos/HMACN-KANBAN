@@ -12,10 +12,11 @@
     "license": "ISC",
     "dependencies": {
         "body-parser": "^1.18.3",
+        "consign": "^0.1.6",
         "ejs": "^2.6.1",
-        "express": "^4.16.3",        
+        "express": "^4.16.3",
         "moment": "^2.29.1",
-        "mongodb": "^3.1.7"        
+        "mongodb": "^3.1.7"
     },
     "devDependencies": {
         "nodemon": "^1.18.4"
