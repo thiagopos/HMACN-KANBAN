@@ -25,8 +25,7 @@ MongoClient.connect(
 
 app.set('view engine', 'ejs')
 
-//um remendo só pra thais conseguir concluir um serviço
-//Com esse belo remendo descobri que posso tratar o result para tratar melhor os dados no front!
+// daqui pra baixo só tem remendo, refatorar pelo amor de deus!
 app.route('/thais').get((req, res) => {
   let cod = 'ORT'
   db.collection('pacientes_internados')
