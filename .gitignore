@@ -1,5 +1,7 @@
 SCRAPPER/NODE_MODULES/
 SCRAPPER/yarn.lock
+SCRAPPER/package-lock.json
 WEB/NODE_MODULES/
 WEB/yarn.lock
 yarn.lock
+WEB/package-lock.json
