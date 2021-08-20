@@ -73,3 +73,50 @@ footer {
   background-color: #3A5D8C; 
   color: white;
 }
+
+#txtNome {
+  width: 98.5%;
+  height: 30px;
+  margin-bottom: 8px;
+}
+
+#txtDocumento {
+  width: 50%;
+  height: 30px;
+  margin-bottom: 8px; 
+  display: inline-block;
+  float: left;
+}
+
+#txtTelefone {
+  width: 46%;
+  height: 30px;
+  margin-bottom: 8px;  
+  display: inline-block;
+  float: right;
+}
+
+.btnCadastro {
+  background-color: #01ACF4;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Asap Condensed', sans-serif;
+  color: white;
+  padding: 9px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;  
+  cursor: pointer;
+}
+
+#formContainer {
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+
+
+label {
+  align-self: left;
+}

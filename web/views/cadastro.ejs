@@ -8,9 +8,20 @@
     <title>KANBAN</title>
   </head>
   <body>
-    <h2 id='title'>Cadastro de Visitante</h2>    
-    
-   
+    <h1 id='title'>Cadastro de Visitante</h2>    
+    <h3>Paciente: <%=data.nome %></h3>
+    <div id= "formContainer">
+    <form action="/cadastro" method="post">
+        <input type="text" id="prontuario" name="prontuario" value="<%=data.prontuario %>" style="display:none">
+        <input type="text" id="leito" name="leito" value="<%=data.leito %>" style="display:none">
+        <input type="text" id="clinica" name="clinica" value="<%=data.clinica %>" style="display:none">
+        <input type="text" id="nome" name="nome" value="<%=data.nome %>" style="display:none">
+        <input id="txtNome" type="text" id="visitante" name="visitante" placeholder="Nome completo" required>       
+        <input id="txtDocumento" type="text" id="documento" name="documento" placeholder="Documento" required>
+        <input id="txtTelefone" type="tel" id="Telefone" placeholder="Telefone" name="Telefone">       
+        <button class="btnCadastro" type = 'submit'>Concluir Cadastro</button>
+    </form>
+    </div>
     <footer>DTI - HMACN - 2021</footer>
   </body>
 </html>

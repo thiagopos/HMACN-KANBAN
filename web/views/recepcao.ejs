@@ -37,9 +37,12 @@
             <td class = 'center'><%=p.leito %></td>
             <td><%=p.clinica %></td>
             <td class = 'center'><%=p.genero %></td>
-            <td class = 'center'><%=p.idade %></td>            
+            <td class = 'center'><%=p.idade %></td>
             <td>
               <form action="/recepcao" method="post">
+                <input type="text" id="prontuario" name="prontuario" value="<%=p.prontuario %>" style="display:none">
+                <input type="text" id="leito" name="leito" value="<%=p.leito %>" style="display:none">
+                <input type="text" id="clinica" name="clinica" value="<%=p.clinica %>" style="display:none">
                 <input type="text" id="nome" name="nome" value="<%=p.nome %>" style="display:none">
                 <button class = 'addVisita' type = 'submit'>Registrar</button>
               </form>
