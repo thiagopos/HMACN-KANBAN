@@ -98,5 +98,9 @@
   {
     "codigo": "81",
     "clinica": "Centro de Tratamento Intermediario"
+  },
+  {
+    "codigo": "83",
+    "clinica": "Isolamento UTI Pediátrica"
   }
 ]

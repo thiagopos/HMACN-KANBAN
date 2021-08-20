@@ -6,7 +6,7 @@ const readline = require('readline')
 const { DateTime } = require('luxon')
 
 const scrapper = async () => {
-  const browser = await puppeteer.launch({ headless: true, slowMo: 30 })
+  const browser = await puppeteer.launch({ headless: true, slowMo: 40 })
   const page = await browser.newPage()
   await page.goto(URL.principal, { timeout: 60000, waitUntil: 'networkidle2' })
 
@@ -19,8 +19,8 @@ const scrapper = async () => {
 
   for (const c of clinicas) {
     await page.goto(URL.selecaoClinica, {
-      delay: 500,
-      timeout: 60000,
+      delay: 600,
+      timeout: 70000,
       waitUntil: 'networkidle2',
     })
     await page.waitForSelector('#unidadeFuncionalDecorate\\:unidadeFuncional')
@@ -63,7 +63,7 @@ const scrapper = async () => {
     readline.clearLine(process.stdout, 0)
     readline.cursorTo(process.stdout, 0)
     process.stdout.write(
-      `Realizando scrap em ${c.clinica}, ${clinicas.indexOf(c) + 1} de 23.`
+      `Realizando scrap em ${c.clinica}, ${clinicas.indexOf(c) + 1} de 25.`
     )
   }
 
@@ -104,17 +104,19 @@ const formatter = async (internados) => {
         for (let pct of clin) {
           kanban.push({
             cod: clinicas[acc].codigo,
-            leito: pct[0],
+            clinica: clinicas[acc].clinica,
+            leito: (pct[0].slice(1,pct[0].length)) === '000' ? ' - ' : pct[0].slice(1,pct[0].length),
             nome: pct[1],
             prontuario: pct[2],
             genero: pct[3],
-            idade: pct[4],
+            idade: pct[4].slice(0, 3),
+            idade_completa: pct[4], // Futuramente corrigir para data_nasc
             hd: pct[5],
             esp: pct[6],
-            di: pct[7],
-            du: pct[8],
-            status: pct[9].toUpperCase(),            
-            observacao: pct[10].split('\n').join(''),
+            di: pct[7], // Futuramente adicionar a data com ano, algoritmo mais complexo nesse caso.
+            du: pct[8], 
+            status: (pct[9].toUpperCase().slice(0, 3) === '00D' ? pct[9].slice(3, 7): pct[9].slice(0, 3)).trim(),       
+            observacao: pct[10].split('\n').join(''),            
           })
         }
       } else {

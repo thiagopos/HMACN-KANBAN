@@ -8,48 +8,50 @@
     <title>KANBAN</title>
   </head>
   <body>
-    <h2 id='title'>Pacientes da Ortopedia</h2>
+    <h2 id='title'>Lista de Pacientes Internados</h2>
     <h3 id='title'>Total de internados: <%- total%></h3>
     <table>
       <thead>
-        <tr>
-          <th>Local</th>
-          <th>Leito</th>
-          <th>Prontuário</th>
+        <tr>       
+          <th>R.H.</th>
           <th>Nome</th>
+          <th>Leito</th>
+          <th>Clínica</th>
           <th>Sexo</th>
-          <th>Idade</th>
-          <th>Esp.</th>
-          <th>HD</th>
-          <th>Internação</th>
-          <th>Status</th>
+          <th>Idade</th>                
+          <th>Visita</th>        
         </tr>
       </thead>
       <tbody id="root"></tbody>
       <% data.forEach(function(p, i) { %>
+        
         <%if(i%2!==0){ %>
           <tr class = 'pct-content even' >
-        <% } %>
-        <%if(p.alert){ %>
-          <tr class = 'pct-content acima_media' >
-        <% } %>
+        <% } %>        
         <%if(i%2===0 && !p.alert){ %>
           <tr class = 'pct-content' >
         <% } %>
-            <td class = 'center'><%=p.nClin %></td>
+                 
+        <td><%=p.prontuario %></td> 
+        <td class = 'nome'><%=p.nome %></td>
             <td class = 'center'><%=p.leito %></td>
-            <td><%=p.prontuario %></td>
-            <td class = 'nome'><%=p.nome %></td>
+            <td><%=p.clinica %></td>
             <td class = 'center'><%=p.genero %></td>
-            <td class = 'center'><%=p.idade %></td>
-            <td class = 'center'><%=p.esp %></td>
-            <td class = 'center'><%=p.hd %></td>
-            <td class = 'center'><%=p.di %></td>
-            <td class = 'center'><%=p.status %></td>            
+            <td class = 'center'><%=p.idade %></td>            
+            <td>
+              <form action="/recepcao" method="post">
+                <input type="text" id="nome" name="nome" value="<%=p.nome %>" style="display:none">
+                <button class = 'addVisita' type = 'submit'>Registrar</button>
+              </form>
+            </td>
+          
         </tr>
+      
       <% }) %>
     </table>
-    
+    <script>
+   
+    </script>
     <footer>DTI - HMACN - 2021</footer>
   </body>
 </html>

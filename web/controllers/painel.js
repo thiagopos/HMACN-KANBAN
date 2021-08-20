@@ -1,7 +1,7 @@
 
 
 module.exports = app => {
-  app.route('tv/:cod').get((req, res) => {
+  app.route('/tv/:cod').get((req, res) => {
     let cod = req.params.cod
     db.collection('pacientes_internados')
       .find({ cod: cod })

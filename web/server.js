@@ -3,11 +3,13 @@ const app = express()
 const clinicas = require('../SCRAPPER/data/clinicas.json')
 const moment = require('moment')
 const MongoClient = require('mongodb').MongoClient
-const uri = 'mongodb://smshacn310:27017'
+const uri = 'mongodb://localhost:27017'
 const consign = require('consign')
 
-app.use(express.urlencoded({ extended: true }))
+
 app.use(express.static(__dirname + '/public'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
 
 consign().include('controllers').into(app)
 
@@ -17,7 +19,7 @@ MongoClient.connect(
   (err, client) => {
     if (err) return console.log(err)
     db = client.db('HMACN_DEV')
-    app.listen(3000, () => {
+    app.listen(80, () => {
       console.log('Server running!')
     })
   }
