@@ -38,12 +38,13 @@ const scrapper = async () => {
         while (el.classe.length === 39) {
           if (aux.length === 0) {
             await page.waitForSelector('#tabelaPainelHospitalar')
+            await page.waitForTimeout(3000)
             aux = await scrapTable(page)
           }
           await page.waitForSelector(`#${el.id}`)
           await page.click(`#${el.id}`)
           await page.waitForSelector('#tabelaPainelHospitalar')
-          //await page.waitForTimeout(3000)
+          await page.waitForTimeout(3000)
           aux2 = await scrapTable(page)
           aux = aux.concat(aux2)
           el = await getElementId(page)
@@ -81,7 +82,7 @@ const getElementId = async (page) => {
   return result
 }
 
-const scrapTable = async (page) => {
+const scrapTable = async (page) => {  
   return await page
     .evaluate(() => {
       const table = Array.from(

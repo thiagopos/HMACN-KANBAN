@@ -15,9 +15,7 @@ module.exports = app => {
         })
     })
     
-    .post((req, res) => {       
-       //res.json(req.body)
-       res.render('cadastro.ejs', { data: req.body })
+    .post((req, res) => {      
+      res.render('cadastro.ejs', { data: req.body})
     })
-      
 }

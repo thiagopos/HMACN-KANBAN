@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />    
+    <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <title>KANBAN</title>
+  </head>
+  <div class="header">
+    <a href="" class="logo">HMACN - Lista de Visitantes</a>
+    <div class="header-right">
+      <a class="active" href="/recepcao">Lista de Pacientes</a>
+      <a href="/recepcao">Lista Pacientes</a>      
+    </div>
+  </div> 
+  <body>
+    <div id="container">
+    <% data.forEach(function(v) { %>
+        <div class="card">
+            <img src="<%=v.imagem%>" alt="Avatar" style="width:100%">
+            <h4><b><%=v.visitante%></b></h4>
+            <div class="container">
+                            
+              <p>Paciente: <%=v.nome%></p>
+              <p>Documento: <%=v.documento%><p>
+              <p><strong><%=v.data%></strong></p>
+              <form action="/visitas" method="post">
+                <input type="text" class="paciente" name="paciente" value="<%=v.nome%>" style="display:none">
+                <input type="text" class="nome_visitante" name="nome_visitante" value="<%=v.visitante%>" style="display:none">
+                <input type="text" class="entrada" name="entrada" value="<%=v.data%>" style="display:none">                
+                <button class="btnHoras" type="submit">Declaração</button>
+              </form>
+            </div>
+          </div> 
+    <% }) %>
+    </div>
+
+
+
+    <footer>DTI - HMACN - 2021</footer>
+  </body>
+  
+</html>

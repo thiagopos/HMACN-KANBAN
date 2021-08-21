@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />    
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/css/print.css"rel="stylesheet" media="print"  />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     <title>KANBAN</title>
   </head>
   <body>
+    <header>
     <h2 id='title'>Lista de Pacientes Internados</h2>
     <h3 id='title'>Total de internados: <%- total%></h3>
+    <input id="txtSearch" type="text" placeholder="Pesquisar">
+    <button id="visitas" onclick="visitas()"> Lista de visitas </button>
+    <button id="print" onclick="window.print()"> Imprimir Lista </button>
+    </header>
     <table>
       <thead>
-        <tr>       
+        <tr>
           <th>R.H.</th>
           <th>Nome</th>
           <th>Leito</th>
@@ -40,20 +46,20 @@
             <td class = 'center'><%=p.idade %></td>
             <td>
               <form action="/recepcao" method="post">
-                <input type="text" id="prontuario" name="prontuario" value="<%=p.prontuario %>" style="display:none">
-                <input type="text" id="leito" name="leito" value="<%=p.leito %>" style="display:none">
-                <input type="text" id="clinica" name="clinica" value="<%=p.clinica %>" style="display:none">
-                <input type="text" id="nome" name="nome" value="<%=p.nome %>" style="display:none">
+                <input type="text" class="prontuario" name="prontuario" value="<%=p.prontuario %>" style="display:none">
+                <input type="text" class="leito" name="leito" value="<%=p.leito %>" style="display:none">
+                <input type="text" class="clinica" name="clinica" value="<%=p.clinica %>" style="display:none">
+                <input type="text" class="nome" name="nome" value="<%=p.nome %>" style="display:none">
                 <button class = 'addVisita' type = 'submit'>Registrar</button>
               </form>
-            </td>
-          
-        </tr>
-      
+            </td>          
+        </tr>      
       <% }) %>
     </table>
     <script>
-   
+      function visitas(){
+            window.location = '/visitas';       
+         }
     </script>
     <footer>DTI - HMACN - 2021</footer>
   </body>

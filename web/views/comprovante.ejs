@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />    
+    <link href="/css/print.css" rel="stylesheet" type="text/css" />
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <title>KANBAN</title>
+  </head>
+  <div class="header">
+    <a href="" class="logo">HMACN - Emitir Declaração</a>
+    <div class="header-right">
+      <a class="active" href="/recepcao">Imprimir</a>
+      <a href="/recepcao">Voltar a Lista</a>      
+    </div>
+  </div> 
+  <body>
+    
+    <div id="documento">
+        <img src="logo.jpg" width="50%"/>
+        <h2>Declaração de Comparecimento</h2>
+        <p>Declaro para os devidos fins que o(a) Sr(a). <%=data.nome_visitante%> 
+           compareceu a este hospital em visita o(a) paciente <%=data.paciente%>,
+           com entrada em <%=data.entrada%> e saída as <p><%=data.saida%></p>
+        </p>
+    </div>
+    <footer>DTI - HMACN - 2021</footer>
+  </body>
+  
+</html>

@@ -42,11 +42,7 @@
   {
     "codigo": "23",
     "clinica": "Cirurgia Geral"
-  },
-  {
-    "codigo": "24",
-    "clinica": "Psiquiatria"
-  },
+  }, 
   {
     "codigo": "25",
     "clinica": "Clínica Geral"

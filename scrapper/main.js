@@ -21,6 +21,8 @@ MongoClient.connect(
 (async () => {
   let acc = 1
   while (true) {
+    await delay(18000)
+
     let data = await scrapper().catch((err) => err)
     let kanban = await formatter(data) 
     
@@ -72,7 +74,7 @@ MongoClient.connect(
       readline.cursorTo(process.stdout, 0)
       console.log('Navegador foi fechado, reiniciando processo de captura.')
     }
-    delay(500000)
+    
     
  
     
