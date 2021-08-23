@@ -20,7 +20,7 @@ MongoClient.connect(
     if (err) return console.log(err)
     db = client.db('HMACN_DEV')
     app.listen(80, () => {
-      console.log('Server running!')
+      console.log('Servidor de pé na porta 80!')
     })
   }
 )

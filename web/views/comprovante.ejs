@@ -11,7 +11,7 @@
   <div class="header">
     <a href="" class="logo">HMACN - Emitir Declaração</a>
     <div class="header-right">
-      <a class="active" href="/recepcao">Imprimir</a>
+      <a class="active" onclick="window.print()">Imprimir</a>
       <a href="/recepcao">Voltar a Lista</a>      
     </div>
   </div> 
@@ -21,9 +21,18 @@
         <img src="logo.jpg" width="50%"/>
         <h2>Declaração de Comparecimento</h2>
         <p>Declaro para os devidos fins que o(a) Sr(a). <%=data.nome_visitante%> 
-           compareceu a este hospital em visita o(a) paciente <%=data.paciente%>,
-           com entrada em <%=data.entrada%> e saída as <p><%=data.saida%></p>
+           portador do documento de nº: <%=data.documento%>, esteve nesta Unidade Hospitalar 
+           em visita o(a) paciente <%=data.paciente%> RH nº<%=data.prontuario%>, com entrada em <%=data.entrada%>.
         </p>
+        <br>
+        <br>
+        <h4>São Paulo <%=data.saida%>,</h4>
+        <br>
+        <h3>____________________________</h3>
+        <p>Assinatura do Funcionário</p>
+        <br>
+        <br>
+        
     </div>
     <footer>DTI - HMACN - 2021</footer>
   </body>

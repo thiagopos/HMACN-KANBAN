@@ -18,8 +18,7 @@ module.exports = app => {
         });
        
        db.collection('visitas').insertOne(result, (err, result) => {
-        if (err) return console.log(err)
-    
+        if (err) return console.log(err)        
         console.log('Salvo no Banco de Dados')
         res.redirect('/recepcao')
        })

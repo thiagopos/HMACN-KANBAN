@@ -10,10 +10,10 @@
   </head>
   <body>
     <div class="header">
-      <a href="/recepcao" class="logo">HMACN - Lista de Pacientes</a>
+      <a href="/recepcao" class="logo">HMACN - Todas Visitas</a>
       <div class="header-right">
         <a class="active" href="/visitas">Visitas Ativas</a>
-        <a onclick="window.print()">Imprimir Lista</a>        
+        <a href="/recepcao">Lista Pacientes</a>                
       </div>
     </div>      
     <div class="container">
@@ -22,13 +22,11 @@
       <thead>
         <tr>
           <th>R.H.</th>
-          <th>Nome</th>
+          <th>Paciente</th>
+          <th>Nome visitante</th>
           <th>Leito</th>
-          <th>Esp.</th>
-          <th>Clínica</th>          
-          <th>Sexo</th>
-          <th>Idade</th>                
-          <th class="noPrint">Visita</th>        
+          <th>Clínica</th> 
+          <th>Revisitar</th>        
         </tr>
       </thead>
       <tbody id="root"></tbody>
@@ -43,17 +41,19 @@
                  
         <td><%=p.prontuario %></td> 
         <td class = 'nome'><%=p.nome %></td>
+        <td class = 'nome'><%=p.visitante %></td>
             <td class = 'center'><%=p.leito %></td>
-            <td><%=p.esp %></td>
             <td><%=p.clinica %></td>            
-            <td class = 'center'><%=p.genero %></td>
-            <td class = 'center'><%=p.idade %></td>
             <td>
-              <form action="/recepcao" method="post">
+              <form action="/cadastro" method="post">
+                <input type="text" id="imagem" name="imagem" style="display:none" value="<%=p.imagem %>">
                 <input type="text" class="prontuario" name="prontuario" value="<%=p.prontuario %>" style="display:none">
                 <input type="text" class="leito" name="leito" value="<%=p.leito %>" style="display:none">
                 <input type="text" class="clinica" name="clinica" value="<%=p.clinica %>" style="display:none">
+                <input type="text" class="documento" name="documento" value="<%=p.documento%>" style="display:none">
                 <input type="text" class="nome" name="nome" value="<%=p.nome %>" style="display:none">
+                <input type="text" class="vistante" name="visitante" value="<%=p.visitante %>" style="display:none">
+                <input type="text" class="Telefone" name="Telefone" value="<%=p.Telefone %>" style="display:none">
                 <button class = 'addVisita' type = 'submit'>Registrar</button>
               </form>
             </td>          
