@@ -23,20 +23,17 @@ module.exports = app => {
                   })
                 }
               });
-            })
-
-            
-          }
-          
+            })          
+          }          
 
           results.sort((a,b) => {
             return a.visitante < b.visitante ? -1 : a.visitante > b.visitante ? 1 : 0;
-          });
+          })
 
           results.forEach(p => {
             p.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)
           })
-
+          
           res.render('visitas.ejs', { data: results, total: total })
         })
     })
@@ -53,8 +50,7 @@ module.exports = app => {
     })
 }
 
-const formataData = date => {
-  //24/08/2021 18:17
+const formataData = date => {  
   let arr = date.split(' ')
   let aux = arr.pop()
   arr.push(' às ')
@@ -64,7 +60,7 @@ const formataData = date => {
 
 const filtroVisitantes = (lista) => {
   
-  const tmp_max = 10 // tempo de duração da visita ativa em minutos
+  const tmp_max = 120 // Tempo de duração maxima da visita ativa no painel.
   const newList = lista.filter(v => {
     let now = DateTime.now().setZone('America/Recife').toISO()
     let d1 = DateTime.fromISO(v.data)
