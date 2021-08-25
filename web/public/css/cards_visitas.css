@@ -2,6 +2,21 @@ html {
     font-family: 'Asap Condensed', sans-serif;    
 }
 
+#txtSearch {
+  
+  margin-bottom: 5px;
+  width: 20%;
+  margin-right: auto;
+  margin-top: 5px;
+  border-radius: 30px;
+  border-color: #01ACF4;
+  border-width: 2px;
+  border-style: solid;
+  padding: 10px 20px 10px 20px;
+  font-weight: bold;
+  margin-right:5px;
+}
+
 #container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

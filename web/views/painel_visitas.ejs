@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />    
-    <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
-  
+    <meta charset="UTF-8" />
+    <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />  
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     <title>KANBAN</title>
@@ -17,8 +16,14 @@
     </div>
   </div> 
   <body>
-    <div id="container">
-    <% data.forEach(function(v) { %>
+
+    <form action="/painel_visitas" method="post">
+    <input id="txtSearch" name="pesquisa" placeholder="Pesquisar">
+    <button class="btnHoras" type="submit">Pesquisar</button>
+    </form>
+    <div id="container">      
+    <% if(data !== null){ %>
+      <% data.forEach(function(v) { %>
         <div class="card">
             <img src="<%=v.imagem%>" alt="Avatar" style="width:100%">
             <h4><b><%=v.visitante%></b></h4>
@@ -36,6 +41,9 @@
             </div>
           </div> 
     <% }) %>
+    <% } %>
+
+    
     </div>
 
 
