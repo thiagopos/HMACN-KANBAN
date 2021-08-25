@@ -10,12 +10,13 @@
   </head>
   <body>
     <div class="header">
-      <a href="/recepcao" class="logo">HMACN - Cadastro de Visitante</a>
+      <a href="/recepcao" class="logo">HMACN - Lista de Pacientes</a>
       <div class="header-right">
-        <a class="active" href="/recepcao">Lista de Pacientes</a>
-        <a href="/visitas">Visitas Ativas</a>       
+        <a href="/recepcao">Lista de Pacientes</a>
+        <a href="/visitas">Visitas Ativas</a>        
+        <a href="/painel_visitas">Total Visitas</a>                
       </div>
-    </div>
+    </div> 
     <h1 id='title'>Cadastro de Visitante</h2>    
     <h3>Paciente: <%=data.nome %></h3>
         <div id= "formContainer">     
@@ -114,7 +115,7 @@
     context.fillStyle = "#AAA";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    var data = canvas.toDataURL('image/png');
+    var data = canvas.toDataURL('image/jpeg', 0.5);
     photo.setAttribute('src', data);
   }
   
@@ -130,7 +131,7 @@
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
     
-      var data = canvas.toDataURL('image/png');
+      var data = canvas.toDataURL('image/jpeg', 0.5);
       photo.setAttribute('src', data);
       formImagem.value = data; // Atribuindo o b64 para o input
     } else {

@@ -8,14 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
     <title>KANBAN</title>
   </head>
+
   <div class="header">
-    <a href="" class="logo">HMACN - Lista de Visitantes</a>
-    <div class="header-right">
-      <a class="active" href="/recepcao">Lista de Pacientes</a>
-      <a href="/registro_visitas">Revisita</a>
-      <a href="/painel_visitas">Todas Visitas</a>      
+      <a href="/recepcao" class="logo">HMACN - Lista de Pacientes</a>
+      <div class="header-right">
+        <a href="/recepcao">Lista de Pacientes</a>
+        <a class="active" href="/visitas">Visitas Ativas</a>
+        <a href="/painel_visitas">Total Visitas</a>                
+      </div>
     </div>
-  </div> 
   <body>
     <div id="container">
     <% data.forEach(function(v) { %>

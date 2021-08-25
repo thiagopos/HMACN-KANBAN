@@ -36,6 +36,12 @@ table {
   font-weight: bold;
 }
 
+#imprimir {
+  margin-left: -20%;  
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+
 
 .even {
   background-color: #f2f2f2;  

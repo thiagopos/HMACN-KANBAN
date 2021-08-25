@@ -4,9 +4,10 @@ module.exports = app => {
     app.route('/cadastro')
     
     .post((req, res) => {
-       let result = req.body    
-       result.data = DateTime.now().setZone('America/Recife').toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)        
-
+       let result = req.body
+       //Alteração importante, salva no formato ISO
+       result.data = DateTime.now().setZone('America/Recife').toISO()         
+       
         db.collection('visitas').findOneAndDelete({prontuario: result.prontuario},  (err,doc) => {
             if (err) return console.log("Nenhum visitante ativo.")
             if(doc){

@@ -55,10 +55,10 @@ MongoClient.connect(
       const pacientes_removidos = kanbanOLD.filter((p) => !kanbanNEW.includes(p))
       
       //Remove os dados de pacientes com alta do banco de dados      
-      pacientes_removidos.forEach((p, i) =>  {
-        db.collection('pacientes_internados').deleteOne({prontuario: p}, (err, obj) => {
+      pacientes_removidos.forEach( p =>  {
+        db.collection('pacientes_internados').deleteOne({prontuario: p}, err => {
           if (err) throw err;
-          console.log("\n Alta: "+ p)  
+          console.log('\nRemovido da lista: ' + p)  
         });
       })
       
@@ -66,49 +66,16 @@ MongoClient.connect(
       //Realiza o Replace de dados de pacientes com base no RH dos mesmos
       kanban.forEach(p => {
         db.collection('pacientes_internados').replaceOne({prontuario: p.prontuario}, p ,{upsert: true}, (err, res) => {
-          if (err) throw err;          
+          if (err) throw err;
+          console.log('\nPacientes atualizados.')          
         })
       })
     } else {
       readline.clearLine(process.stdout, 0)
       readline.cursorTo(process.stdout, 0)
       console.log('Navegador foi fechado, reiniciando processo de captura.')
-    }
-    
-    
- 
-    
-/*
-   
-    if (kanban !== null) {
-      db.listCollections({ name: 'pacientes_internados' }).next(
-        (err, collinfo) => {
-          if (collinfo) {
-            db.collection('pacientes_internados').drop((err, result) => {
-              if (err) throw err
-              console.log('► Remoção de dados antigos...')
-            })            
-          }
+    } 
 
-          delay(500)
-
-          db.collection('pacientes_internados').insertMany(
-            kanban,
-            (err, result) => {
-              if (err) throw err
-              console.log('► Novos dados persistidos com sucesso!')
-              console.log(`▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ ${acc++}`)
-            }
-          )
-        }
-      )
-    } else {
-      readline.clearLine(process.stdout, 0)
-      readline.cursorTo(process.stdout, 0)
-      console.log('Navegador foi fechado, reiniciando processo de captura.')
-    }
-    delay(240000)
-  */
   }
  
 })()
