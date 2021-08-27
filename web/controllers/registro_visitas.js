@@ -1,45 +1,17 @@
+const { DateTime } = require("luxon")
+
 module.exports = app => {
-  app.route('/registro_visitas')
-  .get((req, res) => {
+  app.route('/registro_visitas')    
+  .post((req, res) => {
     db.collection('visitas_passadas')
-      .find()
-      .toArray((err, visitantes) => {
-        if (err) return console.log(err)        
-        
-        db.collection('pacientes_internados')
-          .find()
-          .toArray((err, internados) => {
-            if (err) return console.log(err)
-            console.log(visitantes.length)
-            console.log(internados.length)
-            let lista_revisita = filtroVisitantes(internados, visitantes)
-            
-            lista_revisita.sort((a,b) => {
-              return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
-            });
+      .find( { prontuario: req.body.prontuario} )
+      .toArray((err, result) => {
+        if (err) return console.log(err)
 
-            res.render('registro_visitas.ejs', { data: lista_revisita } )
-        })
-      })
+          result.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)      
+
+          res.render('painel_visitas.ejs', { data: result })
+        })   
+    
   })
-  
-  .post((req, res) => {      
-    res.render('cadastro.ejs', { data: req.body})
-  })
-}
-
-const filtroVisitantes = (internados, visitantes) => {
-  const lista = []
-
-  visitantes.forEach(v => {
-    internados.forEach( i => {
-      if(v.prontuario === i.prontuario) {
-        v.clinica = i.clinica
-        v.leito = i.leito
-        lista.push(v)       
-      }
-    })
-  })
-
-  return lista
 }

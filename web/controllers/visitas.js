@@ -1,4 +1,5 @@
 const { DateTime } = require("luxon")
+const filtroVisitas = require('../utils/visitasAtivas')
 
 module.exports = app => {
     app.route('/visitas')
@@ -6,36 +7,28 @@ module.exports = app => {
       db.collection('visitas')
         .find()
         .toArray((err, results) => {
-          if (err) return console.log(err)          
-          let total = results.length          
+          if (err) return console.log(err)
 
-          //Algoritmo que retorna a lista de visitas ativas.
-          if(results.length !== 0){ 
-            const listaVisitantes = filtroVisitantes(results)
+          if(results.length !== 0){
+            let filtrados = filtroVisitas(results)
+
+            filtrados.sort((a,b) => {
+              return a.visitante < b.visitante ? -1 : a.visitante > b.visitante ? 1 : 0;
+            })
+
+            filtrados.forEach(p => {
+              p.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)
+            })
+                    
+            res.render('visitas.ejs', { data: filtrados })
+          }
+
+          res.render('visitas.ejs', { data: results })      
+        
           
-            listaVisitantes.forEach( v => {
-              db.collection('visitas').findOneAndDelete({prontuario: v.prontuario},  (err,doc) => {
-                if (err) return console.log("Nenhum visitante ativo.")
-                if(doc){
-                  db.collection('visitas_passadas').insertOne(doc.value , (err, result1) => {
-                    if (err) return console.log(err)      
-                      console.log('Salvo no Banco de Dados' + v.nome)          
-                  })
-                }
-              });
-            })          
-          }          
-
-          results.sort((a,b) => {
-            return a.visitante < b.visitante ? -1 : a.visitante > b.visitante ? 1 : 0;
-          })
-
-          results.forEach(p => {
-            p.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)
-          })
-          
-          res.render('visitas.ejs', { data: results, total: total })
         })
+
+         
     })
     
     .post((req, res) => {
@@ -57,7 +50,7 @@ const formataData = date => {
   aux = arr[0] + arr[1] + aux
   return aux
 }
-
+/*
 const filtroVisitantes = (lista) => {
   
   const tmp_max = 120 // Tempo de duração maxima da visita ativa no painel.
@@ -77,3 +70,4 @@ const filtroVisitantes = (lista) => {
   
   return newList
 }
+*/
