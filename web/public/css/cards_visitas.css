@@ -92,7 +92,14 @@ form {
     color: white;
   }
 
-
+  #addVisitaRED {
+    background-color: #D98484;
+  }
+  
+  #addVisitaRED:hover {
+    background-color: #F20530; 
+    
+  }
 
 /*Daqui pra baixo é o header terceirizado*/
 

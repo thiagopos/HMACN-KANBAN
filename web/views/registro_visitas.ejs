@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />    
-    <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
-  
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-    <title>Controle de Acesso</title>
-  </head>
 
-  <div class="header">
-      <a href="/recepcao" class="logo">HMACN - Visita Ativa</a>
-      <div class="header-right">
-        <a href="/recepcao">Lista de Pacientes</a>
-        <a href="/visitas">Visitas Ativas</a>
-        <a href="/painel_visitas">Total Visitas</a>                
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+
+<div class="header">
+  <a href="/recepcao" class="logo">HMACN - Visita Ativa</a>
+  <div class="header-right">
+    <a href="/recepcao">Lista de Pacientes</a>
+    <a href="/visitas">Visitas Ativas</a>
+    <a href="/revisitar">Revisitar</a>
+    <a href="/painel_visitas">Total Visitas</a>
   </div>
-  <body>
+</div>
 
-    <div id="container">      
-      <div class="card">
-        <img src="<%=data.imagem%>" alt="Avatar" style="width:100%">
-          <h4><b><%=data.visitante%></b></h4>
-            <div class="container">                            
-              <p>Paciente: <%=data.nome%></p>
-              <p>Documento: <%=data.documento%><p>
-              <p><strong><%=data.data%></strong></p>
-              <form action="/registro_visitas" method="post">
-                <input type="text" class="paciente" name="paciente" value="<%=data.nome%>" style="display:none">
-                <input type="text" class="prontuario" name="prontuario" value="<%=data.prontuario%>" style="display:none">
-                <input type="text" class="documento" name="documento" value="<%=data.documento%>" style="display:none">
-                <input type="text" class="nome_visitante" name="nome_visitante" value="<%=data.visitante%>" style="display:none">
-                <input type="text" class="entrada" name="entrada" value="<%=data.data%>" style="display:none">                
-                <button class="btnHoras" type="submit">Declaração</button>
-              </form>
-            </div>
-      </div> 
-      
+<body>
+
+  <div id="container">
+    <div class="card">
+      <img src="<%=data.imagem%>" alt="Avatar" style="width:100%">
+      <h4><b><%=data.visitante%></b></h4>
+      <div class="container">
+        <p>Paciente: <%=data.nome%></p>
+        <p>Documento: <%=data.documento%><p>
+            <p><strong><%=data.data%></strong></p>
+            <form action="/registro_visitas" method="post">
+              <input type="text" class="paciente" name="paciente" value="<%=data.nome%>" style="display:none">
+              <input type="text" class="prontuario" name="prontuario" value="<%=data.prontuario%>" style="display:none">
+              <input type="text" class="documento" name="documento" value="<%=data.documento%>" style="display:none">
+              <input type="text" class="nome_visitante" name="nome_visitante" value="<%=data.visitante%>"
+                style="display:none">
+              <input type="text" class="entrada" name="entrada" value="<%=data.data%>" style="display:none">
+              <input type="text" id="encerrar" class="encerrar" name="encerrar" style="display:none">
+              <button id="addVisitaRED" class="btnHoras" onClick="encerrarVisita()" type="submit">Encerrar Visita</button>
+              <button id="btnSubmit"class="btnHoras" type="submit">Declaração</button>
+            </form>
+      </div>
     </div>
+  </div>
+  <script>
+    const encerrarVisita = () => {
+      const inputEncerrar = document.querySelector('#encerrar')
+      const btnSubmit = document.querySelector('btnSubmit')
 
-    <footer>DTI - HMACN - 2021</footer>
-  </body>
+      inputEncerrar.value = '<%=data.prontuario%>'
+      btnSubmit.click()
+    }
+  </script>
+
+  <footer>DTI - HMACN - 2021</footer>
+</body>
+
 </html>

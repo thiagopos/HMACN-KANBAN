@@ -1,157 +1,165 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />    
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
-  
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-    <title>Controle de Acesso</title>
-  </head>
-  <body>
-    <div class="header">
-      <a href="/recepcao" class="logo">HMACN - Lista de Pacientes</a>
-      <div class="header-right">
-        <a href="/recepcao">Lista de Pacientes</a>
-        <a href="/visitas">Visitas Ativas</a>        
-        <a href="/painel_visitas">Total Visitas</a>                
-      </div>
-    </div> 
-    <h1 id='title'>Cadastro de Visitante</h2>    
+
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+
+<body>
+  <div class="header">
+    <a href="/recepcao" class="logo">HMACN - Lista de Pacientes</a>
+    <div class="header-right">
+      <a href="/recepcao">Lista de Pacientes</a>
+      <a href="/visitas">Visitas Ativas</a>
+      <a href="/revisitar">Revisitar</a>
+      <a href="/painel_visitas">Total Visitas</a>
+    </div>
+  </div>
+  <h1 id='title'>Cadastro de Visitante</h2>
     <h3>Paciente: <%=data.nome %></h3>
-        <div id= "formContainer">     
-    <form action="/cadastro" method="post">        
+    <div id="formContainer">
+      <form action="/cadastro" method="post">
         <input type="text" id="imagem" name="imagem" style="display:none" required>
         <input type="text" id="prontuario" name="prontuario" value="<%=data.prontuario %>" style="display:none">
         <input type="text" id="leito" name="leito" value="<%=data.leito %>" style="display:none">
         <input type="text" id="clinica" name="clinica" value="<%=data.clinica %>" style="display:none">
         <input type="text" id="nome" name="nome" value="<%=data.nome %>" style="display:none">
-        <input id="txtNome" type="text" id="visitante" name="visitante" placeholder="Nome completo" autocomplete="off" required>       
-        <input id="txtDocumento" type="text" id="documento" name="documento" placeholder="Documento"  autocomplete="off" required>        
-        <input id="txtTelefone" type="tel" id="Telefone" placeholder="Telefone"  autocomplete="off" name="Telefone">       
-        <button class="btnCadastro" type = 'submit'>Concluir Cadastro</button>
-        <button id="btnVoltar" onclick="voltar()">Cancelar</button>        
-    </form>
+        <input id="txtNome" type="text" id="visitante" name="visitante" placeholder="Nome completo" autocomplete="off"
+          required>
+        <input id="txtDocumento" type="text" id="documento" name="documento" placeholder="Documento" autocomplete="off"
+          required>
+        <input id="txtTelefone" type="tel" id="Telefone" placeholder="Telefone" autocomplete="off" name="Telefone">
+        <button class="btnCadastro" type='submit'>Concluir Cadastro</button>
+        <button id="btnVoltar" onclick="voltar()">Cancelar</button>
+      </form>
     </div>
     <div id="cam">
       <div class="camera">
         <video id="video">Streaming de video não disponível</video>
-       <button id="startbutton">Tirar Foto</button> 
+        <button id="startbutton">Tirar Foto</button>
       </div>
       <canvas id="canvas">
       </canvas>
       <div class="output">
-        <img id="photo" alt="The screen capture will appear in this box."> 
-      </div>      
+        <img id="photo" alt="The screen capture will appear in this box.">
+      </div>
     </div>
-<script>
+    <script>
+      (function () {
+        // The width and height of the captured photo. We will set the
+        // width to the value defined here, but the height will be
+        // calculated based on the aspect ratio of the input stream.
 
-(function() {
-  // The width and height of the captured photo. We will set the
-  // width to the value defined here, but the height will be
-  // calculated based on the aspect ratio of the input stream.
+        var width = 320; // We will scale the photo width to this
+        var height = 0; // This will be computed based on the input stream
 
-  var width = 320;    // We will scale the photo width to this
-  var height = 0;     // This will be computed based on the input stream
+        // |streaming| indicates whether or not we're currently streaming
+        // video from the camera. Obviously, we start at false.
 
-  // |streaming| indicates whether or not we're currently streaming
-  // video from the camera. Obviously, we start at false.
+        var streaming = false;
 
-  var streaming = false;
+        // The various HTML elements we need to configure or control. These
+        // will be set by the startup() function.
+        var video = null;
+        var canvas = null;
+        var photo = null;
+        var startbutton = null;
 
-  // The various HTML elements we need to configure or control. These
-  // will be set by the startup() function.
-  var video = null;
-  var canvas = null;
-  var photo = null;
-  var startbutton = null;
+        function startup() {
+          video = document.getElementById('video');
+          canvas = document.getElementById('canvas');
+          photo = document.getElementById('photo');
+          startbutton = document.getElementById('startbutton');
+          formImagem = document.querySelector('#imagem'); // aqui eu puxo os valores do input que esta no form
 
-  function startup() {
-    video = document.getElementById('video');
-    canvas = document.getElementById('canvas');
-    photo = document.getElementById('photo');
-    startbutton = document.getElementById('startbutton');
-    formImagem = document.querySelector('#imagem'); // aqui eu puxo os valores do input que esta no form
+          navigator.mediaDevices.getUserMedia({
+              video: true,
+              audio: false
+            })
+            .then(function (stream) {
+              video.srcObject = stream;
+              video.play();
+            })
+            .catch(function (err) {
+              console.log("An error occurred: " + err);
+            });
 
-    navigator.mediaDevices.getUserMedia({video: true, audio: false})
-    .then(function(stream) {
-      video.srcObject = stream;
-      video.play();
-    })
-    .catch(function(err) {
-      console.log("An error occurred: " + err);
-    });
+          video.addEventListener('canplay', function (ev) {
+            if (!streaming) {
+              height = video.videoHeight / (video.videoWidth / width);
 
-    video.addEventListener('canplay', function(ev){
-      if (!streaming) {
-        height = video.videoHeight / (video.videoWidth/width);
-      
-        // Firefox currently has a bug where the height can't be read from
-        // the video, so we will make assumptions if this happens.      
-        if (isNaN(height)) {
-          height = width / (4/3);
+              // Firefox currently has a bug where the height can't be read from
+              // the video, so we will make assumptions if this happens.      
+              if (isNaN(height)) {
+                height = width / (4 / 3);
+              }
+
+              video.setAttribute('width', width);
+              video.setAttribute('height', height);
+              canvas.setAttribute('width', width);
+              canvas.setAttribute('height', height);
+              streaming = true;
+            }
+          }, false);
+
+          startbutton.addEventListener('click', function (ev) {
+            takepicture();
+            ev.preventDefault();
+          }, false);
+
+          clearphoto();
         }
-      
-        video.setAttribute('width', width);
-        video.setAttribute('height', height);
-        canvas.setAttribute('width', width);
-        canvas.setAttribute('height', height);
-        streaming = true;
+
+        // Fill the photo with an indication that none has been
+        // captured.
+        function clearphoto() {
+          var context = canvas.getContext('2d');
+          context.fillStyle = "#AAA";
+          context.fillRect(0, 0, canvas.width, canvas.height);
+
+          var data = canvas.toDataURL('image/jpeg', 0.5);
+          photo.setAttribute('src', data);
+        }
+
+        // Capture a photo by fetching the current contents of the video
+        // and drawing it into a canvas, then converting that to a PNG
+        // format data URL. By drawing it on an offscreen canvas and then
+        // drawing that to the screen, we can change its size and/or apply
+        // other changes before drawing it.
+        function takepicture() {
+          var context = canvas.getContext('2d');
+          if (width && height) {
+            canvas.width = width;
+            canvas.height = height;
+            context.drawImage(video, 0, 0, width, height);
+
+            var data = canvas.toDataURL('image/jpeg', 0.5);
+            photo.setAttribute('src', data);
+            formImagem.value = data; // Atribuindo o b64 para o input
+          } else {
+            clearphoto();
+          }
+        }
+
+        // Set up our event listener to run the startup process
+        // once loading is complete.
+        window.addEventListener('load', startup, false);
+      })();
+
+      //Retorna a lista de pacientes ao cancelar o cadastro
+      function voltar() {
+        window.location = '/recepcao';
       }
-    }, false);
+    </script>
 
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      ev.preventDefault();
-    }, false);
-    
-    clearphoto();
-  }
 
-  // Fill the photo with an indication that none has been
-  // captured.
-  function clearphoto() {
-    var context = canvas.getContext('2d');
-    context.fillStyle = "#AAA";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    var data = canvas.toDataURL('image/jpeg', 0.5);
-    photo.setAttribute('src', data);
-  }
-  
-  // Capture a photo by fetching the current contents of the video
-  // and drawing it into a canvas, then converting that to a PNG
-  // format data URL. By drawing it on an offscreen canvas and then
-  // drawing that to the screen, we can change its size and/or apply
-  // other changes before drawing it.
-  function takepicture() {
-    var context = canvas.getContext('2d');
-    if (width && height) {
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-    
-      var data = canvas.toDataURL('image/jpeg', 0.5);
-      photo.setAttribute('src', data);
-      formImagem.value = data; // Atribuindo o b64 para o input
-    } else {
-      clearphoto();
-    }
-  }
-
-  // Set up our event listener to run the startup process
-  // once loading is complete.
-  window.addEventListener('load', startup, false);
-})();
-
-//Retorna a lista de pacientes ao cancelar o cadastro
-function voltar(){
-            window.location = '/recepcao';       
-         }
-</script>
-
-  
     <footer>DTI - HMACN - 2021</footer>
-  </body>
-  
+</body>
+
 </html>

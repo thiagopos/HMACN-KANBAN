@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />    
-    <link href="/css/print.css" rel="stylesheet" type="text/css" />  
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-    <title>Controle de Acesso</title>
-  </head>
-  <div class="header">
-    <a href="" class="logo">HMACN - Emitir Declaração</a>
-    <div class="header-right">
-      <a class="active" onclick="window.print()">Imprimir</a>
-      <a id="return" href="/recepcao">Voltar a Lista</a>      
-    </div>
-  </div> 
-  <body onload="window.print()">
-    
-    <div id="documento">
-        <img src="logo.jpg" width="50%"/>
-        <h2>Declaração de Comparecimento</h2>
-        <p>Declaro para os devidos fins que o(a) Sr(a). <%=data.nome_visitante%> 
-           portador do documento de nº: <%=data.documento%>, esteve nesta Unidade Hospitalar 
-           em visita o(a) paciente <%=data.paciente%> RH nº<%=data.prontuario%>, com entrada em <%=data.entrada%>.
-        </p>
-        <br>
-        <br>
-        <h4>São Paulo <%=data.saida%>,</h4>
-        <br>
-        <h3>____________________________</h3>
-        <p>Assinatura do Funcionário</p>
-        <br>
-        <br>        
-    </div>
-    <footer>DTI - HMACN - 2021</footer>
-    <script>
-      
-      window.onafterprint = async () => {
-        await setTimeout(() => {          
-          },3000); //delay is in milliseconds        
-        let r = document.querySelector('#return')
-        r.click()
-      }
-    </script>
-  </body>
-  
+
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/print.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+<div class="header">
+  <a href="" class="logo">HMACN - Emitir Declaração</a>
+  <div class="header-right">
+    <a class="active" onclick="window.print()">Imprimir</a>    
+    <a id="return" href="/recepcao">Voltar a Lista</a>
+  </div>
+</div>
+
+<body onload="window.print()">
+
+  <div id="documento">
+    <img src="logo.jpg" width="50%" />
+    <h2>Declaração de Comparecimento</h2>
+    <p>Declaro para os devidos fins que o(a) Sr(a). <%=data.nome_visitante%>
+      portador do documento de nº: <%=data.documento%>, esteve nesta Unidade Hospitalar
+      em visita o(a) paciente <%=data.paciente%> RH nº<%=data.prontuario%>, com entrada em <%=data.entrada%>.
+    </p>
+    <br>
+    <br>
+    <h4>São Paulo <%=data.saida%>,</h4>
+    <br>
+    <h3>____________________________</h3>
+    <p>Assinatura do Funcionário</p>
+    <br>
+    <br>
+  </div>
+  <footer>DTI - HMACN - 2021</footer>
+  <script>
+    window.onafterprint = async () => {
+      await setTimeout(() => {}, 3000); //delay is in milliseconds        
+      let r = document.querySelector('#return')
+      r.click()
+    }
+  </script>
+</body>
+
 </html>
