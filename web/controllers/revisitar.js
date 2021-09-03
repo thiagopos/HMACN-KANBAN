@@ -1,5 +1,12 @@
 const { DateTime } = require("luxon")
 
+
+/* Podemos resumir o algoritmo daqui em uma busca no mongo.
+O que eu preciso é: Filtrar as visitas somente de pacientes que
+ainda permanecem internados.
+Eu tenho uma coleção de visitas e uma lista de pacientes internados,
+tudo no mongo, então eu posso fazer uma query nisso... vamos ver como */
+
 module.exports = app => {
   app.route('/revisitar')
     .get((req, res) => {
