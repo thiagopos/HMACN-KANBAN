@@ -36,9 +36,9 @@ module.exports = app => {
                 internados.sort((a, b) => {
                   return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
                 });
-                res.render('recepcao.ejs', {
-                  data: internados
-                })
+
+                let message = 'Um belo teste'
+                res.render('recepcao.ejs', { data: internados })
               }
             })
         })

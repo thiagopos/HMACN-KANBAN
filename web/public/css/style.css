@@ -112,27 +112,16 @@ footer {
   
 }
 
-#txtNome {
-  width: 98.5%;
+.input_visivel {
   height: 30px;
   margin-bottom: 8px;
+  width: 80%;
+  border-radius: 3px;
+  border-color:rgba(0, 0, 0, 0.2);
+  font-size: large;
+  padding-left: 10px;
 }
 
-#txtDocumento {
-  width: 50%;
-  height: 30px;
-  margin-bottom: 8px; 
-  display: inline-block;
-  float: left;
-}
-
-#txtTelefone {
-  width: 46%;
-  height: 30px;
-  margin-bottom: 8px;  
-  display: inline-block;
-  float: right;
-}
 
 .btnCadastro {
   background-color: #01ACF4;

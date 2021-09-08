@@ -24,16 +24,13 @@ module.exports = app => {
             res.render('visitas.ejs', {
               data: filtrados
             })
+          } else {
+
+            res.render('visitas.ejs', {
+              data: results
+            })
           }
-
-          res.render('visitas.ejs', {
-            data: results
-          })
-
-
         })
-
-
     })
 
     .post((req, res) => {

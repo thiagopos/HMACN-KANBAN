@@ -1,5 +1,7 @@
 const { DateTime } = require("luxon")
 
+
+
 module.exports = VISITAS => {
   const DURACAO_MAX = 120;
   const DATA_ATUAL = DateTime.now().setZone('America/Recife').toISO()
@@ -17,7 +19,8 @@ module.exports = VISITAS => {
       db.collection('visitas').findOneAndDelete({
         prontuario: v.prontuario
       }, (err, doc) => {
-        if (err) return console.log("Nenhum visitante ativo.")
+        if (err) 
+          return console.log("Nenhum visitante ativo.")
         if (doc) {
           db.collection('visitas_passadas').insertOne(doc.value, err => {
             if (err) return console.log(err)

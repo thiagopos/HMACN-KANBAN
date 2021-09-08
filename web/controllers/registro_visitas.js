@@ -17,7 +17,7 @@ module.exports = app => {
           })
         }
       })
-      res.redirect('/recepcao')      
+      res.redirect('/recepcao')
     } else {
       visita_ativa.saida = DateTime.now().setZone('America/Recife').toLocaleString(DateTime.DATETIME_SHORT)
       visita_ativa.entrada = formataData(visita_ativa.entrada)

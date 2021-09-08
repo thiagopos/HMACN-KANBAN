@@ -2,23 +2,15 @@ const { DateTime } = require("luxon")
 
 module.exports = app => {
     app.route('/cadastro')
+        .get((req, res) => {
+            res.redirect('/recepcao')
+        })
 
         .post((req, res) => {
             let result = req.body
             
             result.data = DateTime.now().setZone('America/Recife').toISO()
-
-            db.collection('visitas').findOneAndDelete({
-                prontuario: result.prontuario
-            }, (err, doc) => {
-                if (err) return console.log("Nenhum visitante ativo.")
-                if (doc) {
-                    db.collection('visitas_passadas').insertOne(doc.value, err => {
-                        if (err) return console.log(err)
-                        console.log('Salvo no Banco de Dados' + result.nome)
-                    })
-                }
-            });
+            result.dt = DateTime.now().setZone('America/Recife').toLocaleString(DateTime.DATETIME)            
 
             db.collection('visitas').insertOne(result, err => {
                 if (err) return console.log(err)

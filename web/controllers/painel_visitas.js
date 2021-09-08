@@ -16,11 +16,11 @@ module.exports = app => {
 
       db.collection('visitas_passadas')
         .find({
-          $or:[
-            { prontuario: new RegExp(pesquisa, 'i') },
-            { nome: new RegExp(pesquisa, 'i') },
-            { visitante: new RegExp(pesquisa,'i') }
-          ]
+          $or:[{ documento: new RegExp(pesquisa, 'i') },
+          { prontuario: new RegExp(pesquisa, 'i') },
+          { nome: new RegExp(pesquisa, 'i') },
+          { dt: new RegExp(pesquisa, 'i') },
+          { visitante: new RegExp(pesquisa, 'i') }]
         }).limit(30)
         .toArray((err, results) => {
           if (err) return console.log(err)

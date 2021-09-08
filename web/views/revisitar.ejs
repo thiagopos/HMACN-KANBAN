@@ -22,7 +22,7 @@
 <body>
 
   <form action="/revisitar" method="post">
-    <input id="txtSearch" name="pesquisa" placeholder="Pesquisar">
+    <input id="txtSearch" name="pesquisa" placeholder="Pesquisar" minlength="3" autocomplete="off" required>
     <button class="btnHoras" type="submit">Pesquisar</button>
   </form>
   <div id="container">
@@ -36,10 +36,19 @@
         <p>Paciente: <%=v.nome%></p>
         <p>Documento: <%=v.documento%><p>
             <p><strong><%=v.data%></strong></p>
-            <input type="text" class="paciente" name="paciente" value="<%=v.nome%>" style="display:none">
-            <input type="text" class="nome_visitante" name="nome_visitante" value="<%=v.visitante%>"
-              style="display:none">
-            <input type="text" class="entrada" name="entrada" value="<%=v.data%>" style="display:none">
+            <form action="/cadastro" method="post">
+              <input type="text" class="imagem" name="imagem" value="<%=v.imagem%>" style="display:none">
+              <input type="text" class="prontuario" name="prontuario" value="<%=v.prontuario%>" style="display:none">
+              <input type="text" class="leito" name="leito" value="<%=v.leito%>" style="display:none">
+              <input type="text" class="clinica" name="clinica" value="<%=v.clinica%>" style="display:none">
+              <input type="text" class="nome" name="nome" value="<%=v.nome%>" style="display:none">
+              <input type="text" class="visitante" name="visitante" value="<%=v.visitante%>" style="display:none">
+              <input type="text" class="vinculo" name="vinculo" value="<%=v.vinculo%>" style="display:none">
+              <input type="text" class="documento" name="documento" value="<%=v.documento%>" style="display:none">
+              <input type="text" class="telefone" name="telefone" value="<%=v.telefone%>" style="display:none">
+              <button id="btnSubmit" class="btnHoras" type="submit">Revisitar</button>
+            </form>
+
 
       </div>
     </div>
