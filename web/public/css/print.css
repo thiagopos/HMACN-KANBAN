@@ -1,4 +1,8 @@
- 
+#documento {
+  visibility: hidden;
+} 
+
+
 /* print styles */
   @media print {
 
@@ -42,6 +46,7 @@
     }
 
     #documento {
+      visibility: visible;
       margin: 30px;
     }
 
@@ -54,6 +59,8 @@
       display: none;
     }
   }
+
+
 
   
 /* Style the header with a grey background and some padding */

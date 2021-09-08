@@ -36,6 +36,12 @@ table {
   font-weight: bold;
 }
 
+#imprimir {
+  margin-left: -20%;  
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+
 
 .even {
   background-color: #f2f2f2;  
@@ -89,8 +95,7 @@ footer {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;  
-  cursor: pointer;
-  transition-duration: 0.4s;
+  cursor: pointer;  
 }
 
 .addVisita:hover {
@@ -98,27 +103,25 @@ footer {
   color: white;
 }
 
-#txtNome {
-  width: 98.5%;
+#addVisitaRED {
+  background-color: #D98484;
+}
+
+#addVisitaRED:hover {
+  background-color: #F20530; 
+  
+}
+
+.input_visivel {
   height: 30px;
   margin-bottom: 8px;
+  width: 80%;
+  border-radius: 3px;
+  border-color:rgba(0, 0, 0, 0.2);
+  font-size: large;
+  padding-left: 10px;
 }
 
-#txtDocumento {
-  width: 50%;
-  height: 30px;
-  margin-bottom: 8px; 
-  display: inline-block;
-  float: left;
-}
-
-#txtTelefone {
-  width: 46%;
-  height: 30px;
-  margin-bottom: 8px;  
-  display: inline-block;
-  float: right;
-}
 
 .btnCadastro {
   background-color: #01ACF4;

@@ -1,91 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />    
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="/css/print.css"rel="stylesheet" media="print"  />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
-    <title>KANBAN</title>
-  </head>
-  <body>
-    <div class="header">
-      <a href="/recepcao" class="logo">HMACN - Todas Visitas</a>
-      <div class="header-right">
-        <a class="active" href="/visitas">Visitas Ativas</a>
-        <a href="/recepcao">Lista Pacientes</a>                
-      </div>
-    </div>      
-    <div class="container">
-    <input id="txtSearch" class="noPrint" type="text" onkeyup="myFunction()" placeholder="Filtrar Paciente">
-    <table id="tbPacientes">
-      <thead>
-        <tr>
-          <th>R.H.</th>
-          <th>Paciente</th>
-          <th>Nome visitante</th>
-          <th>Leito</th>
-          <th>Clínica</th> 
-          <th>Revisitar</th>        
-        </tr>
-      </thead>
-      <tbody id="root"></tbody>
-      <% data.forEach(function(p, i) { %>
-        
-        <%if(i%2!==0){ %>
-          <tr class = 'pct-content even' >
-        <% } %>        
-        <%if(i%2===0 && !p.alert){ %>
-          <tr class = 'pct-content' >
-        <% } %>
-                 
-        <td><%=p.prontuario %></td> 
-        <td class = 'nome'><%=p.nome %></td>
-        <td class = 'nome'><%=p.visitante %></td>
-            <td class = 'center'><%=p.leito %></td>
-            <td><%=p.clinica %></td>            
-            <td>
-              <form action="/cadastro" method="post">
-                <input type="text" id="imagem" name="imagem" style="display:none" value="<%=p.imagem %>">
-                <input type="text" class="prontuario" name="prontuario" value="<%=p.prontuario %>" style="display:none">
-                <input type="text" class="leito" name="leito" value="<%=p.leito %>" style="display:none">
-                <input type="text" class="clinica" name="clinica" value="<%=p.clinica %>" style="display:none">
-                <input type="text" class="documento" name="documento" value="<%=p.documento%>" style="display:none">
-                <input type="text" class="nome" name="nome" value="<%=p.nome %>" style="display:none">
-                <input type="text" class="vistante" name="visitante" value="<%=p.visitante %>" style="display:none">
-                <input type="text" class="Telefone" name="Telefone" value="<%=p.Telefone %>" style="display:none">
-                <button class = 'addVisita' type = 'submit'>Registrar</button>
-              </form>
-            </td>          
-        </tr>      
-      <% }) %>
-    </table>
-    </div>
-    <script>
-      function myFunction() {
-        // Declare variables
-        let input, filter, table, tr, td, i, txtValue;
-        input = document.querySelector("#txtSearch");
-        filter = input.value.toUpperCase();
-        table = document.querySelector("#tbPacientes");
-        tr = table.querySelectorAll("tr");
-      
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[1];
-          if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
-          }
-        }
-      }
-      </script>
-    
 
-    <footer>DTI - HMACN - 2021</footer>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+
+<div class="header">
+  <a href="/recepcao" class="logo">HMACN - Visita Ativa</a>
+  <div class="header-right">
+    <a href="/recepcao">Lista de Pacientes</a>
+    <a href="/visitas">Visitas Ativas</a>
+    <a href="/revisitar">Revisitar</a>
+    <a href="/painel_visitas">Total Visitas</a>
+  </div>
+</div>
+
+<body>
+
+  <div id="container">
+    <div class="card">
+      <img src="<%=data.imagem%>" alt="Avatar" style="width:100%">
+      <h4><b><%=data.visitante%></b></h4>
+      <div class="container">
+        <p>Paciente: <%=data.nome%></p>
+        <p>Documento: <%=data.documento%><p>
+            <p><strong><%=data.data%></strong></p>
+            <form action="/registro_visitas" method="post">
+              <input type="text" class="paciente" name="paciente" value="<%=data.nome%>" style="display:none">
+              <input type="text" class="prontuario" name="prontuario" value="<%=data.prontuario%>" style="display:none">
+              <input type="text" class="documento" name="documento" value="<%=data.documento%>" style="display:none">
+              <input type="text" class="nome_visitante" name="nome_visitante" value="<%=data.visitante%>"
+                style="display:none">
+              <input type="text" class="entrada" name="entrada" value="<%=data.data%>" style="display:none">
+              <input type="text" id="encerrar" class="encerrar" name="encerrar" style="display:none">
+              <button id="addVisitaRED" class="btnHoras" onClick="encerrarVisita()" type="submit">Encerrar Visita</button>
+              <button id="btnSubmit"class="btnHoras" type="submit">Declaração</button>
+            </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    const encerrarVisita = () => {
+      const inputEncerrar = document.querySelector('#encerrar')
+      const btnSubmit = document.querySelector('btnSubmit')
+
+      inputEncerrar.value = '<%=data.prontuario%>'
+      btnSubmit.click()
+    }
+  </script>
+
+  <footer>DTI - HMACN - 2021</footer>
+</body>
+
 </html>
