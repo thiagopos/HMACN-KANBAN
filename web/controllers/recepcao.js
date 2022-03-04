@@ -37,7 +37,7 @@ module.exports = app => {
                   return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
                 });
 
-                let message = 'Um belo teste'
+                
                 res.render('recepcao.ejs', { data: internados })
               }
             })

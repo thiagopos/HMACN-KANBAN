@@ -16,10 +16,9 @@
     <div class="header-right">
       <a class="active" href="/recepcao">Lista de Pacientes</a>
       <a href="/visitas">Visitas Ativas</a>
-      <a href="/revisitar">Revisitar</a>
       <a href="/painel_visitas">Total Visitas</a>
-    </div>    
-  </div>  
+    </div>
+  </div>
   <div class="container">
     <input id="txtSearch" class="noPrint" type="text" onkeyup="myFunction()" placeholder="Filtrar Paciente">
     <button class='addVisita' id="imprimir" onclick="window.print()">Imprimir Lista</button>
@@ -46,10 +45,10 @@
       <tr class='pct-content'>
         <% } %>
 
-        <td><%=p.prontuario %></td>
-        <td class='nome'><%=p.nome %></td>
+        <td><%=p.registro_hospitalar %></td>
+        <td class='nome'><%=p.nome_paciente %></td>
         <td class='center'><%=p.leito %></td>
-        <td><%=p.esp %></td>
+        <td><%=p.especialidade%></td>
         <td><%=p.clinica %></td>
         <td class='center'><%=p.genero %></td>
         <td class='center'><%=p.idade %></td>

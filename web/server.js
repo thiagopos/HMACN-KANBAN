@@ -18,8 +18,8 @@ MongoClient.connect(
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err, client) => {
     if (err) return console.log(err)
-    db = client.db('HMACN_DEV')
-    app.listen(80, () => {
+    db = client.db('hospitalDB')
+    app.listen(3000, () => {
       console.log('Servidor de pé na porta 80!')
     })
   }
