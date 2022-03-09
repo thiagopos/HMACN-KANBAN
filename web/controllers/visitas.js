@@ -7,7 +7,7 @@ module.exports = app => {
     .get((req, res) => {
       db.collection('visitas')
         .find()
-        .toArray((err, results) => {
+        .toArray(async (err, results) => {
           if (err) return console.log(err)
 
           if (results.length !== 0) {
@@ -17,15 +17,22 @@ module.exports = app => {
               return a.visitante < b.visitante ? -1 : a.visitante > b.visitante ? 1 : 0;
             })
 
-            filtrados.forEach(p => {
-              p.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)
-            })
+            //isso vira um map ou um filter
+                       
 
+            /*
+            filtrados.forEach( async (p, index) => {              
+              let aux = await db.collection('imagens').findOne({_id: p.imagem}).then(resp => {
+                return resp
+              })
+              p.imagem = aux.imagem              
+              p.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)              
+            }) */
+                        
             res.render('visitas.ejs', {
-              data: filtrados
+              data: await _dataGeral(filtrados)
             })
           } else {
-
             res.render('visitas.ejs', {
               data: results
             })
@@ -47,13 +54,34 @@ module.exports = app => {
     })
 }
 
-const formataData = date => {
-  let arr = date.split(' ')
-  let aux = arr.pop()
-  arr.push(' às ')
-  aux = arr[0] + arr[1] + aux
-  return aux
+const _dataGeral = async filtrados => {
+  let lista_final = []
+  
+  for(p of filtrados) {
+    let aux = await db.collection('imagens').findOne({_id: p.imagem}).then( resp => {      
+      let foo = p
+      foo.imagem = resp.imagem
+      foo.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)
+      
+      return foo
+    })
+    
+    lista_final.push(aux)
+  }
+
+
+  /*
+  let _visitas = await filtrados.map( async p => {
+    let aux = await db.collection('imagens').findOne({_id: p.imagem}).then( resp => {
+      return resp
+    })
+    p.imagem = await aux.imagem           
+    p.data = DateTime.fromISO(p.data).toLocaleString(DateTime.DATETIME_SHORT)                     
+    return p
+  }) */  
+  return lista_final
 }
+
 /*
 const filtroVisitantes = (lista) => {
   

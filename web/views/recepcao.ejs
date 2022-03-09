@@ -32,6 +32,7 @@
           <th>Clínica</th>
           <th>Sexo</th>
           <th>Idade</th>
+          <th>Dt. Internação</th>
           <th class="noPrint">Visita</th>
         </tr>
       </thead>
@@ -44,7 +45,6 @@
         <%if(i%2===0 && !p.alert){ %>
       <tr class='pct-content'>
         <% } %>
-
         <td><%=p.registro_hospitalar %></td>
         <td class='nome'><%=p.nome_paciente %></td>
         <td class='center'><%=p.leito %></td>
@@ -52,20 +52,15 @@
         <td><%=p.clinica %></td>
         <td class='center'><%=p.genero %></td>
         <td class='center'><%=p.idade %></td>
+        <td class='center'><%= new Date(p.data_internacao).toLocaleDateString() %></td>
         <td>
           <form action="/recepcao" method="post">
-            <input type="text" class="prontuario" name="prontuario" value="<%=p.prontuario %>" style="display:none">
+            <input type="text" class="prontuario" name="prontuario" value="<%=p.registro_hospitalar %>" style="display:none">
             <input type="text" class="leito" name="leito" value="<%=p.leito %>" style="display:none">
             <input type="text" class="clinica" name="clinica" value="<%=p.clinica %>" style="display:none">
-            <input type="text" class="nome" name="nome" value="<%=p.nome %>" style="display:none">
-            <%if(!p.visita_ativa){%>
+            <input type="text" class="nome" name="nome" value="<%=p.nome_paciente %>" style="display:none">            
             <input type="text" class="visita_ativa" name="visita_ativa" value="" style="display:none">
             <button class='addVisita' type='submit'>Registrar</button>
-            <% } else {%>
-            <input type="text" class="visita_ativa" name="visita_ativa" value="<%=p.prontuario %>" style="display:none">
-            <button id="addVisitaRED" class='addVisita' type='submit'>Visitante</button>
-            <% } %>
-
           </form>
         </td>
       </tr>

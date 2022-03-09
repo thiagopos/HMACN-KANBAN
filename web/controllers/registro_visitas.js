@@ -2,6 +2,8 @@ const { DateTime } = require("luxon")
 
 module.exports = app => {
 
+  
+
   app.route('/registro_visitas')
     .post((req, res) => {
     let visita_ativa = req.body
@@ -25,12 +27,8 @@ module.exports = app => {
       res.render('comprovante', { data: visita_ativa } ) 
     }
   })
+  function formataData(a){
+    return "b"
+  }
 }
 
-const formataData = date => {
-  let arr = date.split(' ')
-  let aux = arr.pop()
-  arr.push(' às ')
-  aux = arr[0] + arr[1] + aux
-  return aux
-}

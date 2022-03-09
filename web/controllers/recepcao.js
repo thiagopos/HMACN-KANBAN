@@ -12,32 +12,17 @@ module.exports = app => {
             .find()
             .toArray((err, visitas) => {
               if (err) return console.log(err)
-              if (visitas.length !== 0) {
-                let comVisita = filtroVisitas(visitas)
-
-                if (comVisita.length !== 0) {
-                  comVisita.forEach(cv => {
-                    internados.forEach(i => {
-                      if (cv.prontuario === i.prontuario)
-                        i.visita_ativa = true;
-                    })
-                  })
-                }
-
+              if (visitas.length !== 0) { 
                 internados.sort((a, b) => {
-                  return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
+                  return a.nome_paciente < b.nome_paciente ? -1 : a.nome_paciente > b.nome_paciente ? 1 : 0;
                 });
-
                 res.render('recepcao.ejs', {
                   data: internados
                 })
-
               } else {
                 internados.sort((a, b) => {
-                  return a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0;
-                });
-
-                
+                  return a.nome_paciente < b.nome_paciente ? -1 : a.nome_paciente > b.nome_paciente ? 1 : 0;
+                });                
                 res.render('recepcao.ejs', { data: internados })
               }
             })
@@ -50,7 +35,7 @@ module.exports = app => {
           .find({
             prontuario: req.body.prontuario
           })
-          .toArray((err, doc) => {  
+          .toArray((err, doc) => {
             
             doc[0].data = DateTime.fromISO(doc[0].data).toLocaleString(DateTime.DATETIME_SHORT)      
             res.render('registro_visitas', {
