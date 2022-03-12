@@ -1,5 +1,6 @@
 const { connectDB } = require('./db')
 const ObjectId = require('mongodb').ObjectID
+const { DateTime } = require("luxon")
 
 /**
  * Retorna as visitas ativas
@@ -10,21 +11,39 @@ const ObjectId = require('mongodb').ObjectID
 /** Esse método eu primeiro busco a lista de visitas, filtro para obter somente as visitas unicas
  * faço a busca de imagens das visitas unicas e retorno.
  */
-const getVisitasAtivasPaciente = async (visitantes) => {  
+const getVisitasAtivasPaciente = async (visitantes) => {
   let listaVisitantes = []
   let listaAUX = []
-  console.log(visitantes)
+
   if (visitantes !== null) {
     for (v of visitantes)
-     listaVisitantes.push(await getImagem(v))
+      listaVisitantes.push(await getImagem(v))
 
     for (l of listaVisitantes) {
-      listaAUX.push(await getPaciente(l))
-    }      
-    
+      let time = await visitaAtiva(l)
+      console.log(time.hours)
+      if (time.hours <= 2) {
+        console.log(await visitaAtiva(l))
+        listaAUX.push(await getPaciente(l))
+      }
+    }
+
     return listaAUX
   } else {
     return null
+  }
+}
+
+const getVisitante = async visita => {
+  let base = await connectDB()
+  try {
+    await base.connect()
+    let visitante = await base.db("hospitalDB").collection("visita").findOne({ "_id": ObjectId(visita) });
+    return visitante
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await base.close();
   }
 }
 
@@ -33,7 +52,7 @@ const getImagem = async visita => {
   try {
     await base.connect()
     let imagem = await base.db("hospitalDB").collection("imagens").findOne({ "_id": ObjectId(visita.imagem) });
-    visita.imagem64 = imagem    
+    visita.imagem64 = imagem
     return visita
   } catch (e) {
     console.error(e);
@@ -56,19 +75,11 @@ const getPaciente = async visita => {
   }
 }
 
-const getVisitas = async () => {
-  let base = await connectDB()
-  let tempo_visita = 2 // horas
-  let ultimaHora = new Date()
-  ultimaHora.setHours(ultimaHora.getHours() - tempo_visita)
-  try {
-    await base.connect()    
-    return await base.db("hospitalDB").collection("visitas").find({ data: { $gt: ultimaHora }}).toArray();
-  } catch (e) {
-    console.error(e);
-  } finally {
-    await base.close();
-  }
+const visitaAtiva = async (visitante) => {
+  const date1 = DateTime.now()
+  const date2 = DateTime.fromJSDate(visitante.data);
+  const diff = date1.diff(date2, ["hours"])
+  return diff.toObject()
 }
 
 module.exports = { getVisitasAtivasPaciente }
