@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+  <link href="/css/print.css" rel="stylesheet" media="print" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+<body>
+  <div class="header">
+    <a href="/_recepcao" class="logo">HMACN - Lista de Pacientes</a>
+    <div class="header-right">
+      <a class="active" href="/_recepcao">Lista de Pacientes</a>
+      <a href="/_visitasAtivas">Visitas Ativas</a>
+      <a href="/painel_visitas">Total Visitas</a>
+    </div>
+  </div>
+  <div class="container">
+    <input id="txtSearch" class="noPrint" type="text" onkeyup="myFunction()" placeholder="Filtrar Paciente">
+    <button class='addVisita' id="imprimir" onclick="window.print()">Imprimir Lista</button>
+    <table id="tbPacientes">
+      <thead>
+        <tr>
+          <th>R.H.</th>
+          <th>Nome</th>
+          <th>Leito</th>
+          <th>Esp.</th>
+          <th>Clínica</th>
+          <th>Sexo</th>
+          <th>Idade</th>          
+          <th class="noPrint">Visita</th>
+        </tr>
+      </thead>
+      <tbody id="root"></tbody>
+      <% data.forEach(function(p, i) { %>
+
+      <%if(i%2!==0){ %>
+      <tr class='pct-content even'>
+        <% } %>
+        <%if(i%2===0 && !p.alert){ %>
+      <tr class='pct-content'>
+        <% } %>
+        <td><%=p.registro_hospitalar %></td>
+        <td class='nome'><%=p.nome_paciente %></td>
+        <td class='center'><%=p.leito %></td>
+        <td><%=p.especialidade%></td>
+        <td><%=p.clinica %></td>
+        <td class='center'><%=p.genero %></td>
+        <td class='center'><%=p.idade %></td>        
+        <td>
+          <form action="/_recepcao" method="post">
+            <input type="text" class="id" name="id" value="<%=p._id %>" style="display:none">            
+            <button class='addVisita' type='submit'>Registro</button>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+  </div>
+  <script>
+    function myFunction() {
+      // Declare variables
+      let input, filter, table, tr, td, i, txtValue;
+      input = document.querySelector("#txtSearch");
+      filter = input.value.toUpperCase().trim();
+      table = document.querySelector("#tbPacientes");
+      tr = table.querySelectorAll("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    
+  </script>
+
+
+  <footer>DTI - HMACN - 2021</footer>
+</body>
+
+</html>

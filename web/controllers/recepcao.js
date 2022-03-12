@@ -22,7 +22,7 @@ module.exports = app => {
               } else {
                 internados.sort((a, b) => {
                   return a.nome_paciente < b.nome_paciente ? -1 : a.nome_paciente > b.nome_paciente ? 1 : 0;
-                });                
+                });
                 res.render('recepcao.ejs', { data: internados })
               }
             })

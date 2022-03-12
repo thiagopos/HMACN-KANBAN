@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+
+<div class="header">
+  <a href="/_recepcao" class="logo">HMACN - Lista de Pacientes</a>
+  <div class="header-right">
+    <a href="/recepcao">Lista de Pacientes</a>
+    <a class="active" href="/visitas">Visitas Ativas</a>
+    <a href="/revisitar">Revisitar</a>
+    <a href="/painel_visitas">Total Visitas</a>
+  </div>
+</div>
+
+<body>
+  <%if(paciente !== null){%>
+    <div id="btnAdd">
+      <form action="/_interfaceCadastro" method="post">
+        <input type="text" class="paciente" name="paciente" value="<%=paciente._id%>" style="display:none"> 
+        <input type="submit" class="btnAlert" value="Cadastrar Adicional"/>
+    </form>
+  </div>    
+  <%}%>
+  <div id="container">    
+    <% data.forEach(function(v) { %>
+    <div class="card">
+      <img src="<%=v.imagem64.imagem%>" alt="Avatar" style="width:100%">
+      <h4><b><%=v.visitante%></b></h4>
+      <div class="container">
+        <p>Paciente: <%=v.nome_paciente%></p>
+        <p>Documento: <%=v.documento%><p>
+            <p><strong><%=new Date(v.data).toLocaleString() %></strong></p>
+            <form action="/_comprovante" method="post">
+              <input type="text" class="visitante" name="visitante" value="<%=v._id%>" style="display:none">              
+              <button class="btnHoras" type="submit">Declaração</button>
+            </form>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+
+
+  <footer>DTI - HMACN - 2021</footer>
+</body>
+
+</html>

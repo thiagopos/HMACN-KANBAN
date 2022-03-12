@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <link href="/css/cadastro.css" rel="stylesheet" type="text/css" />
+  <link href="/css/cards_visitas.css" rel="stylesheet" type="text/css" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    rel="stylesheet">
+  <title>Controle de Acesso</title>
+</head>
+
+<body>
+  <div class="header">
+    <a href="/_recepcao" class="logo">HMACN - Lista de Pacientes</a>
+    <div class="header-right">
+      <a href="/_recepcao">Lista de Pacientes</a>
+      <a href="/visitas">Visitas Ativas</a>
+      <a href="/revisitar">Revisitar</a>
+      <a href="/painel_visitas">Total Visitas</a>
+    </div>
+  </div>
+
+  <div id="formVisita">
+    <%- include('partials/formCadastro.ejs') %>
+  </div>    
+      <%if(visitantes === null) {%>
+      <h3> Paciente sem visitas anteriores. <%= visitantes %></h3>
+      <%} else {%>
+        <div id="listaVisitantes">
+          <table id="tbPacientes">
+            <thead>
+              <tr>          
+                <th>Nome</th>
+                <th>Vínculo</th>
+                <th>Documento</th>
+                <th>Telefone</th>                   
+                <th class="noPrint">Visita</th>
+              </tr>
+            </thead>
+            <tbody id="root"></tbody>
+        <% visitantes.forEach(function(p, i) { %>
+          <%if(i%2!==0){ %>
+          <tr class='pct-content even'>
+            <% } %>
+            <%if(i%2===0 && !p.alert){ %>
+          <tr class='pct-content'>
+            <% } %>
+            <td class='visitante'><%=p.visitante %></td>
+            <td class='vinculo'><%=p.vinculo %></td>
+            <td class='documento'><%=p.documento %></td>
+            <td class='telefone'><%=p.Telefone %></td>
+            <td>
+              <button class='addVisita' onClick='autoPreencher(this)'> Revisita </button>              
+            </td>
+          </tr>
+          <% }) %>
+        </table>
+      <% } %>
+  </div>
+        <script>    
+
+          (function () {
+            // The width and height of the captured photo. We will set the
+            // width to the value defined here, but the height will be
+            // calculated based on the aspect ratio of the input stream.
+
+            var width = 320; // We will scale the photo width to this
+            var height = 0; // This will be computed based on the input stream
+
+            // |streaming| indicates whether or not we're currently streaming
+            // video from the camera. Obviously, we start at false.
+
+            var streaming = false;
+
+            // The various HTML elements we need to configure or control. These
+            // will be set by the startup() function.
+            var video = null;
+            var canvas = null;
+            var photo = null;
+            var startbutton = null;
+
+            function startup() {
+              video = document.getElementById('video');
+              canvas = document.getElementById('canvas');
+              photo = document.getElementById('photo');
+              startbutton = document.getElementById('startbutton');
+              formImagem = document.querySelector('#imagem'); // aqui eu puxo os valores do input que esta no form
+
+              navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+              })
+                .then(function (stream) {
+                  video.srcObject = stream;
+                  video.play();
+                })
+                .catch(function (err) {
+                  console.log("An error occurred: " + err);
+                });
+
+              video.addEventListener('canplay', function (ev) {
+                if (!streaming) {
+                  height = video.videoHeight / (video.videoWidth / width);
+
+                  // Firefox currently has a bug where the height can't be read from
+                  // the video, so we will make assumptions if this happens.      
+                  if (isNaN(height)) {
+                    height = width / (4 / 3);
+                  }
+
+                  video.setAttribute('width', width);
+                  video.setAttribute('height', height);
+                  canvas.setAttribute('width', width);
+                  canvas.setAttribute('height', height);
+                  streaming = true;
+                }
+              }, false);
+
+              startbutton.addEventListener('click', function (ev) {
+                takepicture();
+                ev.preventDefault();
+              }, false);
+
+              clearphoto();
+            }
+
+            // Fill the photo with an indication that none has been
+            // captured.
+            function clearphoto() {
+              var context = canvas.getContext('2d');
+              context.fillStyle = "#AAA";
+              context.fillRect(0, 0, canvas.width, canvas.height);
+
+              var data = canvas.toDataURL('image/webp', 0.1);
+              photo.setAttribute('src', data);
+            }
+
+            // Capture a photo by fetching the current contents of the video
+            // and drawing it into a canvas, then converting that to a PNG
+            // format data URL. By drawing it on an offscreen canvas and then
+            // drawing that to the screen, we can change its size and/or apply
+            // other changes before drawing it.
+            function takepicture() {
+              var context = canvas.getContext('2d');
+              if (width && height) {
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(video, 0, 0, width, height);
+
+                var data = canvas.toDataURL('image/webp', 0.6);
+                photo.setAttribute('src', data);
+                formImagem.value = data; // Atribuindo o b64 para o input
+              } else {
+                clearphoto();
+              }
+            }
+
+            // Set up our event listener to run the startup process
+            // once loading is complete.
+            window.addEventListener('load', startup, false);
+          })();
+
+          //Retorna a lista de pacientes ao cancelar o cadastro
+          function voltar() {
+            window.location = '/recepcao';
+          }
+
+          //SCRIPT REFERENTE AO INPUT DE NUMERO DE TELEFONE
+          // E SCRIPT DO DOCUMENTO
+          //
+          //
+          //
+          // FAZENDO ESPAÇO PRA VER MELHOR
+
+          function txtFormat(input) {//returns (###) ###-####
+            input = input.toUpperCase()             
+            return input;
+          }
+
+
+          function docFormat(input) {//returns (###) ###-####
+            input = input.replace(/\D/g, '');
+            let size = input.length;                    
+            if (size > 11) { input = input.slice(0, 11) } 
+            return input;
+          }
+
+          function phoneFormat(input) {//returns (###) ###-####
+            input = input.replace(/\D/g, '');
+            let size = input.length;                    
+            if (size > 11) { input = input.slice(0, 11) } 
+            return input;
+          }
+
+          var paciente =  '<%- JSON.stringify(paciente) %>'
+          var visitantes =  JSON.parse('<%- JSON.stringify(visitantes) %>')
+
+          function autoPreencher(el) {
+            let inputNome = document.querySelector("#txtNome")
+            let inputVinculo = document.querySelector("#txtVinculo")
+            let inputDocumento = document.querySelector("#txtDocumento")
+            let inputTelefone = document.querySelector("#txtTelefone")
+            let imagem64 = document.querySelector("#photo") //Aqui será carregada a imagem somente para a visualização do funcionário
+            let imagem = document.querySelector("#imagem")
+
+
+            let documento = (el.parentElement.parentElement).childNodes[5].innerText        
+            
+            for(v of visitantes){
+                            
+              if(v.documento === documento){
+                imagem.value = v.imagem
+                imagem64.src = v.imagem64.imagem
+                inputNome.value = v.visitante
+                inputVinculo.value = v.vinculo
+                inputDocumento.value = v.documento
+                inputTelefone.value = v.Telefone                
+              } else {                
+              }
+            }
+          }
+
+
+        </script>
+
+
+        <footer>DTI - HMACN - 2021</footer>
+</body>
+
+</html>

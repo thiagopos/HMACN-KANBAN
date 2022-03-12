@@ -1,0 +1,41 @@
+
+  <h1 id='title'>Cadastro de Visitante</h2>
+    <h3>Paciente: <%=paciente.nome_paciente %>
+    </h3>
+    <h3>Clínica: <%=paciente.clinica %>
+    </h3>
+    <%if(paciente.leito !==null){%>
+      <h3>Leito: <%=paciente.leito%>
+      </h3>
+      <%}%>
+        <div id="formContainer">
+          <form action="/_cadastro" method="post">
+            <input type="text" id="imagem" name="imagem" style="display:none" required>
+            <input type="text" id="paciente" name="paciente" value="<%=paciente._id %>" style="display:none">
+            <input type="text" id="leito" name="leito" value="<%=paciente.leito %>" style="display:none">
+            <input type="text" id="clinica" name="clinica" value="<%=paciente.clinica %>" style="display:none">
+            
+
+            <input class="input_visivel" id="txtNome" onInput="this.value = txtFormat(this.value)" type="text" id="visitante" name="visitante"
+              placeholder="Nome completo" autocomplete="off" minlength="8" maxlength="40" required>
+            <input class="input_visivel" id="txtVinculo" onInput="this.value = txtFormat(this.value)" type="text" id="vinculo" name="vinculo"
+              placeholder="Vínculo com paciente" autocomplete="off" minlength="4" maxlength="9" required>
+            <input class="input_visivel" id="txtDocumento" type="text" id="documento" name="documento"
+              placeholder="Documento" autocomplete="off" onInput="this.value = docFormat(this.value)" minlength="8" maxlength="12" required>
+            <input class="input_visivel" id="txtTelefone" onInput="this.value = phoneFormat(this.value)" type="tel" id="telefone" placeholder="Telefone"
+              autocomplete="off" name="Telefone" minlength="8" maxlength="16">
+            <button class="btnCadastro" type='submit'>Concluir Cadastro</button>
+            <button id="btnVoltar" onclick="voltar()">Cancelar</button>
+          </form>
+        </div>
+        <div id="cam">
+          <div class="camera">
+            <video id="video">Streaming de video não disponível</video>
+            <button id="startbutton">Tirar Foto</button>
+          </div>
+          <canvas id="canvas">
+          </canvas>
+          <div class="output">
+            <img id="photo" alt="The screen capture will appear in this box.">
+          </div>
+        </div>
